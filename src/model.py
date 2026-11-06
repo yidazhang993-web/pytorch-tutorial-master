@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-# 作者：小土堆
-# 公众号：我是土堆
+
 import torch
 from torch import nn
 
