@@ -1,5 +1,11 @@
 /.idea
 /logs
-/data
 /logs_*
+/data
+/dataset
 /P10.dataset
+__pycache__/
+*.py[cod]
+env/
+venv/
+*.pth
