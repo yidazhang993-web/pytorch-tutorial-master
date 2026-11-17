@@ -24,8 +24,8 @@ class Tudui(nn.Module):
         return x
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':# 测试模型,查看输出形状
     tudui = Tudui()
-    input = torch.ones((64, 3, 32, 32))
+    input = torch.ones((64, 3, 32, 32))#64张图片,3通道,32*32
     output = tudui(input)
     print(output.shape)
