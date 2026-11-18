@@ -13,17 +13,17 @@ from torch.utils.data import DataLoader
 # 定义训练的设备
 device = torch.device("cuda")
 
-train_data = torchvision.datasets.CIFAR10(root="../data", train=True, transform=torchvision.transforms.ToTensor(),
+train_data = torchvision.datasets.CIFAR10(root="./P10.data", train=True, transform=torchvision.transforms.ToTensor(),
                                           download=True)
-test_data = torchvision.datasets.CIFAR10(root="../data", train=False, transform=torchvision.transforms.ToTensor(),
+test_data = torchvision.datasets.CIFAR10(root="./P10.data", train=False, transform=torchvision.transforms.ToTensor(),
                                          download=True)
 
 # length 长度
 train_data_size = len(train_data)
 test_data_size = len(test_data)
 # 如果train_data_size=10, 训练数据集的长度为：10
-print("训练数据集的长度为：{}".format(train_data_size))
-print("测试数据集的长度为：{}".format(test_data_size))
+print(f"训练数据集的长度为：{train_data_size}")
+print(f"测试数据集的长度为：{test_data_size}")
 
 
 # 利用 DataLoader 来加载数据集
@@ -50,11 +50,11 @@ class Tudui(nn.Module):
         x = self.model(x)
         return x
 tudui = Tudui()
-tudui = tudui.to(device)
+tudui = tudui.to(device)# 把模型移动到cuda上
 
 # 损失函数
 loss_fn = nn.CrossEntropyLoss()
-loss_fn = loss_fn.to(device)
+loss_fn = loss_fn.to(device)# 把损失函数移动到cuda上
 # 优化器
 # learning_rate = 0.01
 # 1e-2=1 x (10)^(-2) = 1 /100 = 0.01
@@ -70,10 +70,10 @@ total_test_step = 0
 epoch = 10
 
 # 添加tensorboard
-writer = SummaryWriter("../logs_train")
+writer = SummaryWriter("./logs/train_gpu_2")
 
 for i in range(epoch):
-    print("-------第 {} 轮训练开始-------".format(i+1))
+    print(f"-------第 {i+1} 轮训练开始-------")
 
     # 训练步骤开始
     tudui.train()
@@ -91,7 +91,7 @@ for i in range(epoch):
 
         total_train_step = total_train_step + 1
         if total_train_step % 100 == 0:
-            print("训练次数：{}, Loss: {}".format(total_train_step, loss.item()))
+            print(f"训练次数：{total_train_step}, Loss: {loss.item()}")
             writer.add_scalar("train_loss", loss.item(), total_train_step)
 
     # 测试步骤开始
